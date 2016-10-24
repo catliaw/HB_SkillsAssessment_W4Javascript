@@ -373,6 +373,14 @@
 <script>
   "use strict";
   // put your code here
+  function getFaveFood(evt){
+    evt.preventDefault();
+    var faveFood = $("#favorite-food-input").val();
+    $("#agreeable-text").html("I like " + faveFood + ", too.");
+  }
+
+  $("#agreeable-form").on("submit", getFaveFood);
+
 </script>
 
 <div class="hint">
@@ -403,6 +411,45 @@
 <script>
   "use strict";
   // put your code here
+  function guessingGame(){
+    var randomNumber = Math.floor((Math.random() * 100) + 1);
+    
+    var guess = prompt("Guess the number!");
+    guess = parseInt(guess);
+
+    while(guess != randomNumber){
+      if (guess > randomNumber){
+        alert("Your guess was too high! Try again!");
+        guess = prompt("Guess the number!");
+      }
+      else {
+        alert("Your guess was too low! Try again!");
+        guess = prompt("Guess the number!");
+      }
+    }
+
+    alert("You guessed the number correctly!");
+  }
+
+    // while(True){
+    //   if (guess === randomNumber){
+    //     alert("You guessed the number correctly!");
+    //     return False;
+    //   }
+    //   else if (guess > randomNumber){
+    //     alert("Your guess was too high! Try again!");
+    //     guess = prompt("Guess the number!");
+    //     return True;
+    //   }
+    //   else {
+    //     alert("Your guess was too low! Try again!");
+    //     guess = prompt("Guess the number!");
+    //     return True;
+    //   }
+    // }
+
+  $("#play-guessing-game").on("click", guessingGame);
+
 </script>
 
 <div class="hint">
@@ -444,6 +491,107 @@
 <script>
   "use strict";
   // put your code here
+  var playButton = $("#play-guessing-game-2");
+    // console.log(playButton);
+  var guessInput = $("#number-guessed");
+    // console.log(guessInput);
+  var guessForm = $("#guessing-game-2-form");
+    // console.log(guessForm);
+  var guessButton = $("#try-this-number");
+    // console.log(guessButton);
+  var msgDiv = $("#number-guessing-msg");
+    // console.log(msgDiv);
+
+  function guessingGame2(){
+    playButton.prop("disabled", true);
+      // console.log("playButon disabled!");
+    guessInput.prop("disabled", false);
+      // console.log("guessInput enabled!");
+    guessButton.prop("disabled", false);
+      // console.log("guessButton enabled!");
+
+    var randomNumber2 = Math.floor((Math.random() * 100) + 1);
+      console.log("Random number:", randomNumber2);
+
+    var guess2Outside = 0;
+
+    function guessingInception(){
+      // evt.preventDefault();
+      var guess2 = guessInput.val();
+        // console.log("guess2 string: " + guess2);
+      
+      guess2 = parseInt(guess2);
+        console.log("guess2 integer: " + guess2);
+      
+      guess2Outside = guess2;
+        console.log("guess2 Outside inside function: " + guess2Outside);
+
+      if (guess2Outside === randomNumber2){
+        console.log("guess is just right!")
+        msgDiv.html("You guessed the number correctly!");
+        playButton.prop("disabled", false);
+        guessInput.prop("disabled", true);
+        setTimeout(function(){guessInput.val("");}, 2000);
+        guessButton.prop("disabled", true);
+      }
+
+      else if (guess2Outside > randomNumber2){
+        console.log("guess is too high!")
+        msgDiv.html("Your guess was too high! Try again!");
+        setTimeout(function(){guessInput.val("");}, 1000);
+      }
+
+      else {
+        console.log("guess is too low!")
+        msgDiv.html("Your guess was too low! Try again!");
+        setTimeout(function(){guessInput.val("");}, 1000);
+      }
+    }
+
+    //seems to cause an infinite loop. :(
+    // function guessingLoop(){
+    //   while(guess2Outside != randomNumber2){
+
+    //     if (guess2Outside > randomNumber2){
+    //       console.log("guess is too high!")
+    //       msgDiv.html("Your guess was too high! Try again!");
+    //       guessForm.on("submit", function(evt){
+    //         evt.preventDefault();
+    //         guessingInception();
+    //       });
+    //     }
+    //     else {
+    //       console.log("guess is too low!")
+    //       msgDiv.html("Your guess was too low! Try again!");
+    //       guessForm.on("submit", function(evt){
+    //         evt.preventDefault();
+    //         guessingInception();
+    //       });
+    //     }
+    //   }
+    //   console.log("guess is just right!")
+    //   msgDiv.html("You guessed the number correctly!");
+      // playButton.prop("disabled", false);
+      // guessInput.prop("disabled", true);
+      // guessButton.prop("disabled", true);
+    // }
+    
+    // guessForm.on("submit", guessingInception);
+
+    guessForm.on("submit", function(evt){
+      evt.preventDefault();
+      guessingInception();
+      // guessingLoop();
+      // console.log("guess2 Outside outside function: " + guess2Outside);
+    });
+  }
+
+  playButton.on("click", function(){
+    guessingGame2();
+    msgDiv.html("");
+  });
+    console.log("guessingGame CLICKED!")
+  
 </script>
 
 
